@@ -16,3 +16,20 @@ async function run_command(step) {
 }
 
 module.exports = run_command;
+const { exec } = require('child_process');
+const path = require('path');
+
+module.exports = async function runCommand(step, context) {
+  const cwd = path.resolve(context.basePath, step.cwd || '.');
+  exec(step.command, { cwd }, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error executing command: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.error(`stderr: ${stderr}`);
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
+  });
+};
