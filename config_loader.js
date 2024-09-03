@@ -3,8 +3,6 @@ const fs = require("fs").promises;
 const axios = require("axios");
 const path = require("path");
 
-const config_files_path = path.join(__dirname, "config_files");
-
 const SKRIPTOR_URL = process.env.SKRIPTOR_URL;
 
 if (!SKRIPTOR_URL) {
