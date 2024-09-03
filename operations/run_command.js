@@ -6,12 +6,16 @@ async function run_command(step, context) {
     const command = commandParts[0];
     const args = commandParts.slice(1);
 
-    const child = spawn(command, args, { cwd: step.cwd, stdio: 'inherit' });
+    await new Promise((resolve, reject) => {
+      const child = spawn(command, args, { cwd: step.cwd, stdio: 'inherit' });
 
-    child.on('close', (code) => {
-      if (code !== 0) {
-        throw new Error(`Command execution failed with code: ${code}`);
-      }
+      child.on('close', (code) => {
+        if (code !== 0) {
+          reject(new Error(`Command execution failed with code: ${code}`));
+        } else {
+          resolve();
+        }
+      });
     });
   } catch (error) {
     throw new Error(`Command execution failed: ${error.message}`);
