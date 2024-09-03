@@ -26,3 +26,6 @@ Thumbs.db
 # Build directories
 dist
 build
+
+# Locall cache files
+config_files

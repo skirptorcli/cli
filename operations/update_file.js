@@ -20,9 +20,7 @@ async function update_file(step, context) {
 }
 
 async function getGroqUpdate(currentContent, instructions) {
-  const apiKey =
-    process.env.GROQ_API_KEY ||
-    "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"; // Make sure to set this environment variable
+  const apiKey = process.env.GROQ_API_KEY; // Make sure to set this environment variable
   if (!apiKey) {
     throw new Error("GROQ_API_KEY is not set in the environment variables");
   }
