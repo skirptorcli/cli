@@ -1,12 +1,13 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs").promises;
+const path = require("path");
 
-module.exports = async function createDirectory(step, context) {
-  const dirPath = path.resolve(context.basePath, step.path);
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
-    console.log(`Directory created: ${dirPath}`);
-  } else {
-    console.log(`Directory already exists: ${dirPath}`);
+async function create_directory(step, context) {
+  try {
+    await fs.mkdir(step.path, { recursive: true });
+    console.log(`Created directory: ${step.path}`);
+  } catch (error) {
+    throw new Error(`Failed to create directory: ${error.message}`);
   }
-};
+}
+
+module.exports = create_directory;

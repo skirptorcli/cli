@@ -1,0 +1,97 @@
+project:
+  name: next-js-app
+  description: A Next.js application
+
+steps:
+  - name: Ask for project name
+    type: ask_user
+    question: What is your project named?
+    variable: project_name
+
+  - name: Ask for using TypeScript
+    type: ask_user
+    question: Would you like to use TypeScript?
+    variable: use_typescript
+
+  - name: Ask for using ESLint
+    type: ask_user
+    question: Would you like to use ESLint?
+    variable: use_eslint
+
+  - name: Ask for using Tailwind CSS
+    type: ask_user
+    question: Would you like to use Tailwind CSS?
+    variable: use_tailwind_css
+
+  - name: Ask for using App Router
+    type: ask_user
+    question: Would you like to use App Router?
+    variable: use_app_router
+
+  - name: Ask for using Turbopack
+    type: ask_user
+    question: Would you like to use Turbopack for next dev?
+    variable: use_turbopack
+
+  - name: Create project directory
+    type: create_directory
+    path: ./{{user_input_project_name}}
+
+  - name: Install required packages
+    type: run_command
+    command: npm install next@latest react@latest react-dom@latest
+    cwd: ./{{user_input_project_name}}
+
+  - name: Create package.json
+    type: create_file
+    path: ./{{user_input_project_name}}/package.json
+    content: |
+      {
+        "name": "{{user_input_project_name}}",
+        "version": "1.0.0",
+        "description": "",
+        "main": "index.js",
+        "scripts": {
+          "dev": "next dev",
+          "build": "next build",
+          "start": "next start",
+          "lint": "next lint"
+        }
+      }
+
+  - name: Create app directory
+    type: create_directory
+    path: ./{{user_input_project_name}}/app
+
+  - name: Create layout.tsx
+    type: create_file
+    path: ./{{user_input_project_name}}/app/layout.tsx
+    content: |
+      export default function RootLayout({
+        children,
+      }: {
+        children: React.ReactNode
+      }) {
+        return (
+          <html lang="en">
+            <body>{children}</body>
+          </html>
+        )
+      }
+
+  - name: Create page.tsx
+    type: create_file
+    path: ./{{user_input_project_name}}/app/page.tsx
+    content: |
+      export default function Page() {
+        return <h1>Hello, Next.js!</h1>
+      }
+
+  - name: Create public directory
+    type: create_directory
+    path: ./{{user_input_project_name}}/public
+
+  - name: Run development server
+    type: run_command
+    command: npm run dev
+    cwd: ./{{user_input_project_name}}

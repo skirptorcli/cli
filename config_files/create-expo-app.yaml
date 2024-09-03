@@ -1,0 +1,31 @@
+project:
+  name: expo-app
+  description: A new Expo project
+
+steps:
+  - name: Install Expo CLI globally
+    type: run_command
+    command: npm install -g expo-cli
+
+  - name: Ask for project name
+    type: ask_user
+    question: What is the name of your project?
+    variable: project_name
+
+  - name: Create a new Expo project
+    type: run_command
+    command: npx create-expo-app {{user_input_project_name}}
+
+  - name: Ask for confirmation before starting the development server
+    type: ask_user
+    question: Are you sure you want to start the development server? (yes/no)
+    variable: start_server
+
+  - name: Navigate to the project directory
+    type: run_command
+    command: cd {{user_input_project_name}}
+
+  - name: Start the development server
+    type: run_command
+    command: npx expo start
+    condition: user_input_start_server == 'yes'
