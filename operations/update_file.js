@@ -47,7 +47,7 @@ Provide the full updated file content, return as a string. Do not include any ex
 
   try {
     const response = await client.post("/chat/completions", {
-      model: "mixtral-8x7b-32768", // or another appropriate Groq model
+      model: "llama-3.1-70b-versatile", // or another appropriate Groq model
       messages: [
         {
           role: "system",
