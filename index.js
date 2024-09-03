@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+require('dotenv').config();
 const path = require("path");
 const { program } = require("commander");
 const config_loader = require("./config_loader");
