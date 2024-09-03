@@ -1,7 +1,5 @@
 const yaml = require("js-yaml");
-const fs = require("fs").promises;
 const axios = require("axios");
-const path = require("path");
 
 const SKRIPTOR_URL = process.env.SKRIPTOR_URL;
 
