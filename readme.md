@@ -90,7 +90,63 @@ To create or modify configurations, you'll need to use the server's interface or
 
 ## Operations
 
-[The Operations section remains the same as in the previous version]
+### ask_user
+Prompts the user for input.
+
+```yaml
+- name: Ask for project name
+  type: ask_user
+  question: What is the name of your project?
+  variable: project_name
+```
+
+### create_directory
+Creates a new directory.
+
+```yaml
+- name: Create project directory
+  type: create_directory
+  path: ./{{user_input_project_name}}
+```
+
+### create_file
+Creates a new file with specified content.
+
+```yaml
+- name: Create README file
+  type: create_file
+  path: ./{{user_input_project_name}}/README.md
+  content: |
+    # {{user_input_project_name}}
+    
+    {{project.description}}
+```
+
+### update_file
+Updates an existing file using Groq-powered natural language instructions.
+
+```yaml
+- name: Update README.md
+  type: update_file
+  path: ./{{user_input_project_name}}/README.md
+  instructions: |
+    Add a "How to contribute" section with the following steps:
+    1. Fork the repository
+    2. Create your feature branch
+    3. Commit your changes
+    4. Push to the branch
+    5. Create a new Pull Request
+```
+
+### run_command
+Executes a shell command.
+
+```yaml
+- name: Initialize git repository
+  type: run_command
+  command: git init
+  cwd: ./{{user_input_project_name}}
+```
 
 ## How It Works
 
@@ -128,7 +184,27 @@ To use Skirptor CLI, you need to set up your environment:
 
 ## Adding New Operations
 
-[The Adding New Operations section remains the same as in the previous version]
+To add a new operation:
+
+1. Create a new file in the `operations/` directory (e.g., `operations/my_new_operation.js`).
+2. Export a function that takes two parameters: `step` and `context`.
+3. Implement your operation logic in this function.
+
+Example:
+```javascript
+// operations/log_message.js
+module.exports = async function log_message(step, context) {
+  console.log(step.message);
+};
+```
+
+You can then use this operation in your configuration file:
+```yaml
+steps:
+  - name: Log a message
+    type: log_message
+    message: Hello, {{user_input_username}}!
+```
 
 ## Troubleshooting
 
@@ -141,4 +217,10 @@ To use Skirptor CLI, you need to set up your environment:
 
 ## Contributing
 
-[The Contributing section remains the same as in the previous version]
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
