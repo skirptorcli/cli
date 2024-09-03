@@ -1,15 +1,18 @@
-const { exec } = require("child_process");
-const util = require("util");
-
-const exec_promise = util.promisify(exec);
+const { spawn } = require("child_process");
 
 async function run_command(step, context) {
   try {
-    const { stdout, stderr } = await exec_promise(step.command, {
-      cwd: step.cwd,
+    const commandParts = step.command.split(' ');
+    const command = commandParts[0];
+    const args = commandParts.slice(1);
+
+    const child = spawn(command, args, { cwd: step.cwd, stdio: 'inherit' });
+
+    child.on('close', (code) => {
+      if (code !== 0) {
+        throw new Error(`Command execution failed with code: ${code}`);
+      }
     });
-    console.log(stdout);
-    if (stderr) console.error(stderr);
   } catch (error) {
     throw new Error(`Command execution failed: ${error.message}`);
   }
