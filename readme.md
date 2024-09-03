@@ -147,6 +147,17 @@ Executes a shell command.
   command: git init
   cwd: ./{{user_input_project_name}}
 ```
+### clone_repository
+Clones a Git repository to a specified destination.
+
+```yaml
+- name: Clone repository
+  type: clone_repository
+  repository_url: https://github.com/user/repo.git
+  destination: ./local_directory
+```
+
+The `destination` field is optional. If not provided, the repository will be cloned into a directory named after the repository.
 
 ## How It Works
 

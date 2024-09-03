@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-require('dotenv').config();
+require("dotenv").config();
 const path = require("path");
 const { program } = require("commander");
 const config_loader = require("./config_loader");
@@ -8,7 +8,7 @@ const execution_engine = require("./execution_engine");
 
 async function main() {
   program
-    .name("project-setup-cli")
+    .name("skriptor")
     .description("CLI to execute project setup based on a config file")
     .version("1.0.0")
     .argument("<config>", "Path to the configuration file")
