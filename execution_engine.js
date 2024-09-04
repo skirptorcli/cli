@@ -1,9 +1,9 @@
 const Handlebars = require("handlebars");
 
 class execution_engine {
-  constructor(operations) {
+  constructor(operations, utils) {
     this.operations = operations;
-    this.context = { user_input: {} };
+    this.context = { user_input: {}, utils };
   }
 
   async execute(config) {
