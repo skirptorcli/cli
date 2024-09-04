@@ -7,7 +7,7 @@ if (!SKRIPTOR_URL) {
   throw new Error("SKRIPTOR_URL is not set in the environment variables");
 }
 
-async function load(config_path) {
+async function load(config_path, logger) {
   try {
     const config_response = await axios.get(
       `${SKRIPTOR_URL}/api/cli/${config_path}`
