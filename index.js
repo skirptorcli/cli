@@ -24,7 +24,21 @@ async function main() {
     .description("CLI to execute project setup based on a config file")
     .version("1.0.0")
     .argument("<config>", "Path to the configuration file")
-    .action(async (config_path) => {
+    .command('view-logs <logFileName>')
+    .description('View the specified log file')
+    .action((logFileName) => {
+      const logFilePath = path.join(__dirname, logFileName);
+      console.log(`Accessing log file: ${logFilePath}`);
+      require('fs').readFile(logFilePath, 'utf8', (err, data) => {
+        if (err) {
+          console.error(`Error reading log file: ${err.message}`);
+          process.exit(1);
+        }
+        console.log(data);
+      });
+    })
+    .command('run <config>')
+    .description('Execute project setup based on a config file')
       const universalTimeInMilliseconds = new Date().getTime();
       const logger = new Logger({
         logDir: config_path,
