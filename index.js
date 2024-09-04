@@ -42,7 +42,9 @@ async function main() {
         );
 
         // Execute configuration
-        const engine = new execution_engine(operations);
+        const engine = new execution_engine(operations, {
+          logger,
+        });
         await engine.execute(config);
 
         logger.info("Setup completed successfully!");
@@ -50,6 +52,7 @@ async function main() {
         logger.info("Error during setup:", error.message);
         process.exit(1);
       }
+      console.log("Access the log file for more details.", logger.logFileName);
     });
 
   program.parse(process.argv);
