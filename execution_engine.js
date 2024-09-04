@@ -1,12 +1,24 @@
+/**
+ * ExecutionEngine class is responsible for executing a series of operations
+ * defined in a configuration file. It uses Handlebars for templating and
+ * supports dynamic user input and utility functions.
+ */
 const Handlebars = require("handlebars");
 
 class execution_engine {
-  constructor(operations, utils) {
+  /**
+   * Constructs an instance of ExecutionEngine.
+   * @param {Object} operations - A map of operation names to their implementation functions.
+   * @param {Object} utils - Utility functions and objects, including a logger.
+   */
     this.operations = operations;
     this.context = { user_input: {}, utils };
   }
 
-  async execute(config) {
+  /**
+   * Executes the steps defined in the configuration.
+   * @param {Object} config - The configuration object containing project details and steps.
+   */
     this.context.project = config.project;
 
     for (const step of config.steps) {
@@ -15,7 +27,11 @@ class execution_engine {
     }
   }
 
-  async execute_step(step) {
+  /**
+   * Executes a single step in the configuration.
+   * @param {Object} step - The step object containing details of the operation to execute.
+   * @throws Will throw an error if the operation type is unknown.
+   */
     const compiled_step = this.compile_step(step);
     const operation = this.operations[compiled_step.type];
 
@@ -30,7 +46,11 @@ class execution_engine {
     }
   }
 
-  object_flatten(obj) {
+  /**
+   * Flattens a nested object into a single-level object with underscore-separated keys.
+   * @param {Object} obj - The object to flatten.
+   * @returns {Object} - The flattened object.
+   */
     const flattened = {};
 
     function recurse(current, prefix = "") {
@@ -50,7 +70,11 @@ class execution_engine {
     recurse(obj);
     return flattened;
   }
-  compile_step(step) {
+  /**
+   * Compiles a step by processing its template strings using Handlebars.
+   * @param {Object} step - The step object to compile.
+   * @returns {Object} - The compiled step with all template strings processed.
+   */
     return Object.entries(step).reduce((acc, [key, value]) => {
       if (typeof value === "string") {
         const template = Handlebars.compile(value);
