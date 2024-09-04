@@ -2,6 +2,12 @@ const fs = require("fs").promises;
 const path = require("path");
 const axios = require("axios");
 
+/**
+ * Updates a file based on the provided instructions.
+ *
+ * @param {Object} step - The step object containing the path and instructions for the update.
+ * @param {Object} context - The context object containing utilities like the logger.
+ */
 async function update_file(step, context) {
   try {
     const filePath = path.resolve(step.path);
@@ -13,8 +19,9 @@ async function update_file(step, context) {
     );
 
     await fs.writeFile(filePath, updatedContent);
-    console.log(`Updated file: ${step.path}`);
+    context.utils.logger.info(`Updated file: ${step.path}`);
   } catch (error) {
+    context.utils.logger.error(`Failed to update file: ${error.message}`);
     throw new Error(`Failed to update file: ${error.message}`);
   }
 }
@@ -70,9 +77,8 @@ Provide the full updated file content, return as a string. Do not include any ex
 
     return response.data.choices[0].message.content.trim();
   } catch (error) {
-    console.error(
-      "Error calling Groq API:",
-      error.response?.data || error.message
+    context.utils.logger.error(
+      `Error calling Groq API: ${error.response?.data || error.message}`
     );
     throw error;
   }
