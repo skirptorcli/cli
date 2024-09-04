@@ -70,6 +70,7 @@ async function main() {
       console.log("Access the log file for more details.", logger.logFileName);
     });
 
+  program.showHelpAfterError();
   program.parse(process.argv);
 }
 
