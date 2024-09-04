@@ -1,5 +1,4 @@
 const fs = require("fs").promises;
-const path = require("path");
 
 /**
  * Creates a new directory at the specified path.

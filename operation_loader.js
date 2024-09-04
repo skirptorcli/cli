@@ -1,6 +1,18 @@
+/**
+ * This module is responsible for loading operation modules from the specified directory.
+ * It dynamically imports each JavaScript file in the directory as an operation,
+ * making them available for use in the execution engine.
+ */
+
 const fs = require("fs").promises;
 const path = require("path");
 
+/**
+ * Loads operation modules from the specified directory.
+ *
+ * @param {string} operations_dir - The directory containing operation modules.
+ * @returns {object} - An object mapping operation names to their respective functions.
+ */
 async function load_operations(operations_dir) {
   const operations = {};
   const files = await fs.readdir(operations_dir);

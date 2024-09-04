@@ -15,7 +15,6 @@ class ExecutionEngine {
     this.operations = operations;
     this.context = { user_input: {}, utils };
   }
-  }
 
   /**
    * Executes the steps defined in the configuration.
@@ -40,6 +39,9 @@ class ExecutionEngine {
     const operation = this.operations[compiled_step.type];
 
     if (!operation) {
+      this.context.utils.logger.error(
+        `Unknown operation type: ${compiled_step.type}`
+      );
       throw new Error(`Unknown operation type: ${compiled_step.type}`);
     }
 
