@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * This script serves as the entry point for the Skriptor CLI tool.
+ * It loads environment variables, parses command-line arguments, and executes
+ * project setup based on a specified configuration file.
+ */
+
 require("dotenv").config();
 const path = require("path");
 const { program } = require("commander");
@@ -7,6 +13,11 @@ const operation_loader = require("./operation_loader");
 const execution_engine = require("./execution_engine");
 const Logger = require("./utils/logger");
 
+/**
+ * Main function to execute the Skriptor CLI tool.
+ * It sets up the command-line interface, loads configurations and operations,
+ * and executes the setup process.
+ */
 async function main() {
   program
     .name("skriptor")
