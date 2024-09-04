@@ -24,14 +24,22 @@ async function getGroqUpdate(currentContent, instructions) {
   if (!apiKey) {
     throw new Error("GROQ_API_KEY is not set in the environment variables");
   }
-
+  // openai client
   const client = axios.create({
-    baseURL: "https://api.groq.com/openai/v1",
+    baseURL: "https://api.openai.com/v1",
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
   });
+  // grop client
+  // const client = axios.create({
+  //   baseURL: "https://api.groq.com/openai/v1",
+  //   headers: {
+  //     Authorization: `Bearer ${apiKey}`,
+  //     "Content-Type": "application/json",
+  //   },
+  // });
 
   const prompt = `
 Given the following file content:
@@ -47,7 +55,7 @@ Provide the full updated file content, return as a string. Do not include any ex
 
   try {
     const response = await client.post("/chat/completions", {
-      model: "llama-3.1-70b-versatile", // or another appropriate Groq model
+      model: "gpt-4o-mini", // or another appropriate Groq model
       messages: [
         {
           role: "system",
@@ -57,7 +65,7 @@ Provide the full updated file content, return as a string. Do not include any ex
         { role: "user", content: prompt },
       ],
       max_tokens: 4000, // Adjust as needed
-      temperature: 0.7,
+      temperature: 0.4,
     });
 
     return response.data.choices[0].message.content.trim();
