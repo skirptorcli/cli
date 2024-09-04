@@ -5,7 +5,7 @@
  */
 const Handlebars = require("handlebars");
 
-class execution_engine {
+class ExecutionEngine {
   /**
    * Constructs an instance of ExecutionEngine.
    * @param {Object} operations - A map of operation names to their implementation functions.
@@ -96,4 +96,4 @@ class execution_engine {
   }
 }
 
-module.exports = execution_engine;
+module.exports = ExecutionEngine;
