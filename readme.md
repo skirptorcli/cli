@@ -53,9 +53,19 @@ Whether you're setting up a new web application, configuring a development envir
 
 ## Usage
 
+## Usage
+
 To use the CLI, run:
 
 ```
+
+### Commands
+
+- **run <config>**: Execute project setup based on a config file.
+  - Example: `skirptor run ABC123`
+
+- **view-logs <logFileName>**: View the specified log file.
+  - Example: `skirptor view-logs setup.log`
 skirptor <config-code>
 ```
 
