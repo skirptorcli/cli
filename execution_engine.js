@@ -11,14 +11,17 @@ class execution_engine {
    * @param {Object} operations - A map of operation names to their implementation functions.
    * @param {Object} utils - Utility functions and objects, including a logger.
    */
+  constructor(operations, utils) {
     this.operations = operations;
     this.context = { user_input: {}, utils };
+  }
   }
 
   /**
    * Executes the steps defined in the configuration.
    * @param {Object} config - The configuration object containing project details and steps.
    */
+  async execute(config) {
     this.context.project = config.project;
 
     for (const step of config.steps) {
@@ -32,6 +35,7 @@ class execution_engine {
    * @param {Object} step - The step object containing details of the operation to execute.
    * @throws Will throw an error if the operation type is unknown.
    */
+  async execute_step(step) {
     const compiled_step = this.compile_step(step);
     const operation = this.operations[compiled_step.type];
 
@@ -51,6 +55,7 @@ class execution_engine {
    * @param {Object} obj - The object to flatten.
    * @returns {Object} - The flattened object.
    */
+  object_flatten(obj) {
     const flattened = {};
 
     function recurse(current, prefix = "") {
@@ -75,6 +80,7 @@ class execution_engine {
    * @param {Object} step - The step object to compile.
    * @returns {Object} - The compiled step with all template strings processed.
    */
+  compile_step(step) {
     return Object.entries(step).reduce((acc, [key, value]) => {
       if (typeof value === "string") {
         const template = Handlebars.compile(value);
