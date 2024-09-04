@@ -10,7 +10,7 @@ class execution_engine {
     this.context.project = config.project;
 
     for (const step of config.steps) {
-      console.log(`Executing step: ${step.name}`);
+      this.context.utils.logger.info(`Executing step: ${step.name}`);
       await this.execute_step(step);
     }
   }
