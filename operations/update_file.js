@@ -13,7 +13,7 @@ async function update_file(step, context) {
     const filePath = path.resolve(step.path);
     const currentContent = await fs.readFile(filePath, "utf8");
 
-    const updatedContent = await getGroqUpdate(
+    const updatedContent = await getLlmUpdate(
       currentContent,
       step.instructions
     );
@@ -26,27 +26,38 @@ async function update_file(step, context) {
   }
 }
 
-async function getGroqUpdate(currentContent, instructions) {
-  const apiKey = process.env.GROQ_API_KEY; // Make sure to set this environment variable
-  if (!apiKey) {
-    throw new Error("GROQ_API_KEY is not set in the environment variables");
+async function getLlmUpdate(currentContent, instructions) {
+  const groqKey = process.env.GROQ_API_KEY; // Make sure to set this environment variable
+  const openAiKey = process.env.OPEN_AI_API_KEY; // Make sure to set this environment variable
+
+  if (!groqKey && !openAiKey) {
+    throw new Error(
+      "GROQ_API_KEY or OPEN_AI_API_KEY are not set in the environment variables"
+    );
   }
-  // openai client
-  const client = axios.create({
-    baseURL: "https://api.openai.com/v1",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-  });
-  // grop client
-  // const client = axios.create({
-  //   baseURL: "https://api.groq.com/openai/v1",
-  //   headers: {
-  //     Authorization: `Bearer ${apiKey}`,
-  //     "Content-Type": "application/json",
-  //   },
-  // });
+  let client = null;
+  let model = null;
+  if (groqKey) {
+    // groq client
+    client = axios.create({
+      baseURL: "https://api.groq.com/openai/v1",
+      headers: {
+        Authorization: `Bearer ${groqKey}`,
+        "Content-Type": "application/json",
+      },
+    });
+    model = "llama-3.1-70b-versatile";
+  } else if (openAiKey) {
+    // openai client
+    client = axios.create({
+      baseURL: "https://api.openai.com/v1",
+      headers: {
+        Authorization: `Bearer ${openAiKey}`,
+        "Content-Type": "application/json",
+      },
+    });
+    model = "gpt-4o-mini";
+  }
 
   const prompt = `
 Given the following file content:
@@ -62,7 +73,6 @@ Provide the full updated file content, return as a string. Do not include any ex
 
   try {
     const response = await client.post("/chat/completions", {
-      model: "gpt-4o-mini", // or another appropriate Groq model
       messages: [
         {
           role: "system",

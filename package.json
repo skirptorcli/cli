@@ -1,8 +1,9 @@
 {
   "name": "skriptor",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.2",
+  "description": "Skirptor CLI is a flexible and extensible command-line tool designed to automate project setup processes. It uses YAML configurations to define setup steps, making it easy to create and share project templates across your team or the community.",
   "main": "index.js",
+  "private": true,
   "bin": {
     "skriptor": "./index.js"
   },

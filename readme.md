@@ -30,25 +30,8 @@ Whether you're setting up a new web application, configuring a development envir
 - **Modular**: Well-organized code structure for easy maintenance and extension.
 
 ## Installation
-
-1. Clone the repository:
    ```
-   git clone https://github.com/skirptorcli/cli.git
-   ```
-
-2. Navigate to the project directory:
-   ```
-   cd cli
-   ```
-
-3. Install dependencies:
-   ```
-   npm install
-   ```
-
-4. Make the CLI globally accessible (optional):
-   ```
-   npm link
+   npm install -g skriptor
    ```
 
 ## Usage
@@ -202,6 +185,16 @@ To use Skirptor CLI, you need to set up your environment:
    ```
    set GROQ_API_KEY=your_api_key_here
    ```
+
+3. Tos use the OPEN AI powered `update_file`.
+   ```
+   export OPEN_AI_API_KEY=your_api_key_here
+   ```
+   For Windows, use:
+   ```
+   set OPEN_AI_API_KEY=your_api_key_here
+   ```
+
 
 ## Adding New Operations
 
